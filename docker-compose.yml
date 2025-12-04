@@ -6,6 +6,9 @@ services:
       POSTGRES_DB: ${DATABASE}
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASS}
+      DATABASE: ${DATABASE}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASS: ${DATABASE_PASS}
     volumes:
       - postgres_data:/var/lib/postgresql
       - ./SCTI-2025-Backend/src/create.sh:/docker-entrypoint-initdb.d/create.sh
@@ -16,6 +19,8 @@ services:
     build:
       context: ./SCTI-2025-Backend/src
     container_name: backend
+    ports:
+      - "8081:8080"
     volumes:
       - backend_logs:/root/logs
       - backend_data:/root/data
@@ -74,9 +79,6 @@ services:
       - frontend
     ports:
       - "8080:80"
-    volumes:
-      - ./letsencrypt/www:/var/www/certbot/:ro
-      - ./letsencrypt/conf:/etc/letsencrypt/:ro
     networks:
       - internal
     restart: unless-stopped
