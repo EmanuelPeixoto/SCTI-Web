@@ -71,6 +71,9 @@ services:
       - frontend
     #ports:
     #  - "8080:80"
+    networks:
+      - default
+      - dokploy-network
     restart: unless-stopped
 
 volumes:
@@ -78,3 +81,8 @@ volumes:
   backend_logs:
   frontend_logs:
   backend_data:
+
+networks:
+  dokploy-network:
+    external: true
+    name: dokploy-network
